@@ -2,7 +2,7 @@
 
 ## Rôle
 
-Ce serveur servira 
+Ce serveur servira
 
 * de serveur Snapcast pour le multiroom
 * de serveur Mopidy pour Spotify ou des fichiers locaux typiquement
@@ -49,7 +49,7 @@ systemctl restart snapserver
 
 ### Création du fichier ```/etc/asound.conf```
 
-Ce fichier permet de créer une "sortie" audio bleutooth sous forme d'un [fichier FIFO ](https://man7.org/linux/man-pages/man7/fifo.7.html).
+Ce fichier permet de créer une "sortie" audio bleutooth sous forme d'un [fichier FIFO](https://man7.org/linux/man-pages/man7/fifo.7.html).
 
 ```config title="/etc/asound.conf"
 pcm.bluetooth {
@@ -91,7 +91,6 @@ doc_root = /usr/share/snapweb
 ...
 
 ```
-
 
 ## Installation MOPIDY
 
