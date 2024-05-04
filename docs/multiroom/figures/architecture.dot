@@ -1,0 +1,106 @@
+digraph D {
+    colorscheme = Pastel23
+
+    node [ shape=box style=filled colorscheme=Pastel23 fillcolor=2 fontname = "Courier New" fontsize=16]
+    graph [fontname = "Courier New" fontsize=16];
+    edge [fontname = "Courier New" fontsize=16];
+
+
+    audio_source_bluetooth [ label = "Source audio Bluetooth" class="device" shape="box" style="rounded"]
+    audio_source_internet [ label = "Internet" class="device" shape="box" style="rounded" ]
+    audio_source_local [ label = "Source r&eacute;seau locale" class="device" shape="box" style="rounded" ]
+
+    subgraph cluster_core {
+        label = "Serveur principal\nRPi 3 + Hifiberry Digi+\nAmplificateur en Enceintes HiFi";
+        bgcolor=3
+        labelloc="b"
+
+        subgraph cluster_rpi3 {
+            label = "Raspberry Pi 3";
+            bgcolor=1
+
+            bluealsa [ label = "BlueAlsa" class="device" ]
+
+            alsa [ label = "Alsa" class="device" ]
+            spotify [ label="Spotify Client" class="device" ]
+            player [ label="Player" class="device" ]
+            audio_server [ label = "Snapserver" class="device" ];
+            audio_client_c [ label = "Snapclient" class="device" ];
+
+            bluealsa -> alsa;
+            spotify -> alsa
+            alsa -> audio_server;
+            audio_server -> audio_client_c;
+
+        }
+
+        hifiberry_c [ label = "Hifiberry-Digi+" class="device" fillcolor=1 ];
+        amplifier_c [ label = "Ampli Hifi" class="device" fillcolor=1 ]
+        speaker_c [ label = "Enceintes Hifi" class="device" fillcolor=1 ]
+
+        audio_client_c -> hifiberry_c;
+
+    }
+
+    audio_source_bluetooth -> bluealsa;
+    audio_source_internet -> spotify;
+    audio_source_local -> player;
+
+
+    
+    hifiberry_c -> amplifier_c [label="Lien num&eacute;rique\nFibre optique"];
+    amplifier_c -> speaker_c;
+
+
+    player -> alsa;
+
+    subgraph cluster_lite {
+        label="Multiroom lite\nRPi Zero W + Audio DAC Shim\nEnceintes amplifi&eacute;es"
+        bgcolor=3
+        labelloc="b"
+
+        subgraph cluster_client_lineout {
+            label="RPi Zero W";
+            bgcolor=1
+
+            audio_client_cl [ label = "Snapclient" class="device" ];
+            line_out_cl [ label = "Audio DAC SHIM" class="device" ]
+        }
+
+        audio_client_cl -> line_out_cl
+        audio_server -> audio_client_cl
+
+        subgraph cluster_amplified_speakers {
+            label="Enceintes amplifi&eacute;es"
+            bgcolor=1
+
+            amplifier_cl [ label = "Ampli" class="device" ];
+            speaker_cl [ label = "Haut parleurs" ];
+        }
+
+        line_out_cl -> amplifier_cl [label="Lien analogique\n(mini-jack)"];
+        amplifier_cl -> speaker_cl;
+    }
+
+    subgraph cluster_speaker {
+        label="Multiroom int&eacute;gr&eacute;\nRPi Zero W + Ampli 25W + HP"
+        bgcolor=3
+        labelloc="b"
+
+        subgraph cluster_client_speaker {
+            label="RPi Zero";
+            bgcolor=1
+
+            audio_client_cs [ label="Snapclient" ];
+            digiamp [ label="Rapsberry DigiAmp+" ]
+
+            audio_client_cs -> digiamp
+        }
+
+        speaker_cs [ label="Haut parleurs" fillcolor=1 ]
+        digiamp -> speaker_cs [ label="Cablage interne" ]
+    }
+
+    audio_server -> audio_client_cs
+
+}

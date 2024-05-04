@@ -1,0 +1,39 @@
+site_name: Documentation projets "DIY"
+
+theme:
+  name: material
+  language: fr
+  # custom_dir: overrides
+  palette: 
+    primary: teal
+  features:
+    - navigation.path
+
+# extra_css:
+#   - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+
+plugins:
+  
+  - search :
+      lang: fr
+  - kroki:
+      HttpMethod: POST
+  # - blog
+  # - privacy
+
+# nav:
+#   - Accueil : index.md
+#   - Projets :
+#     - Solution Multiroom : multiroom
+
